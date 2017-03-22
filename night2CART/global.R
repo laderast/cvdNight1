@@ -5,11 +5,14 @@ library(dplyr)
 ###Put Data processing steps here
 #load dataset A
 
-datasetA <- read.delim("data/datasetA.txt",row.names = 1)
-datasetA <- datasetA %>% filter(startWeights != 9999 & endWeights != 9999)
-datasetA <- datasetA %>% mutate(weightLoss = startWeights - endWeights, weightLossPerDay = weightLoss / timeElapsed)
-datasetA <- na.omit(datasetA)
-dataset <- datasetA
+# datasetA <- read.delim("data/datasetA.txt",row.names = 1)
+# datasetA <- datasetA %>% filter(startWeights != 9999 & endWeights != 9999)
+# datasetA <- datasetA %>% mutate(weightLoss = startWeights - endWeights, weightLossPerDay = weightLoss / timeElapsed)
+# datasetA <- na.omit(datasetA)
+# dataset <- datasetA
+
+dataset <- iris
+dataset <- dataset %>% mutate(sepalRatio=Sepal.Length/Sepal.Width, petalRatio = Petal.Length/Petal.Width)
 
 #Code to process dataset B
 
@@ -45,3 +48,4 @@ varClass <- sapply(dataset, class)
 #separate the variables into each type
 categoricalVars <- names(varClass[varClass == "factor"])
 numericVars <- names(varClass[varClass %in% c("numeric", "integer")])
+

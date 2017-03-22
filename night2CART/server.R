@@ -16,36 +16,27 @@ shinyServer(function(input, output) {
     dataset
   })
   
-  output$summaryTable <- renderPrint({
-    summary(dataOut())
-  })
   
-  output$crossTab <- renderTable({
-    #ggplot()
-    out <- dataOut()[,c(input$crossTab1, input$crossTab2)]
-    tab <- table(out)
-    tab
-  })
+  treeObj <- reactive({ 
+    #outcomeVariable: outcome of interest
+    #checkboxGroup: which variables to include
+    #pruneTree: pruning functions
+    
+    #might want to use party (ctree()) instead - don't have to prune
+    
+    trainTree <- tree(Species ~ ., data=dataset)
+    
+    return(trainTree)
+    })
   
-  output$distPlot <- renderPlot({
+  output$treePlot <- renderPlot({
+    ##levels of interactivity
+    #examineGroups: output summary for group
     
-    outPlot <- ggplot(dataOut(), aes_string(x=input$numericVarHist)) + geom_histogram(bins=input$bins)
-
-    if(input$catVarHist!="none"){
-      outPlot <- outPlot + facet_wrap(c(input$catVarHist))
-    }
-    
-    outPlot
   })
 
-  output$boxPlot <- renderPlot({
-    outPlot <- ggplot(dataOut(), aes_string(input$catVarBox, input$numericVarBox)) + geom_boxplot()
-    outPlot
-  })
-  
-  output$correlationPlot <- renderPlot({
-    outPlot <- ggplot(dataOut(), aes_string(input$numericVarCor1, input$numericVarCor2,colour=input$corrPlotCatVar)) +geom_point()
-    outPlot
+  output$groupTable <- renderTable({
+    
   })
   
 })

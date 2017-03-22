@@ -10,7 +10,7 @@ library(shiny)
 shinyUI(navbarPage(
 
   # Application title
-  "Data Explorer",
+  "Shiny EDA Explorer",
 
   # Sidebar with a slider input for number of bins
     tabPanel("Summary of Files",
@@ -26,11 +26,11 @@ shinyUI(navbarPage(
               column(width=4,selectInput(input="catVarHist", "Select Category to Condition On", 
                   choices = c("none",categoricalVars), selected = "none")),
               column(width=4, sliderInput("bins", "Number of bins:", min = 1, max = 50,value = 30))),
-              plotOutput("distPlot"),
-             fluidRow(column(width=3, sliderInput("filterValues", "Filter Out Values", min=0, max=9999, value=9999)),
-                      column(width=3, textInput("textFilter", "Remove Values", value="")),
-                      column(width=3, numericInput("scaleValues", "Scale Values", value=1))
-                      )
+              plotOutput("distPlot")#,
+             # fluidRow(column(width=3, sliderInput("filterValues", "Filter Out Values", min=0, max=9999, value=9999)),
+             #          column(width=3, textInput("textFilter", "Remove Values", value="")),
+             #          column(width=3, numericInput("scaleValues", "Scale Values", value=1))
+             #          )
              
              ),
       tabPanel("Boxplot Explorer",
@@ -38,12 +38,12 @@ shinyUI(navbarPage(
                            choices = numericVars, selected=numericVars[1])),
                column(width=4,selectInput(inputId = "catVarBox", "Select Category to Condition on", 
                            choices = categoricalVars, selected=categoricalVars[1]))),
-               plotOutput("boxPlot"),
+               plotOutput("boxPlot")#,
                
-               fluidRow(column(width=3, sliderInput("filterValues", "Filter Out Values", min=0, max=9999, value=9999)),
-                        column(width=3, textInput("textFilter", "Remove Values", value="")),
-                        column(width=3, numericInput("scaleValues", "Scale Values", value=1))
-               )
+               # fluidRow(column(width=3, sliderInput("filterValues", "Filter Out Values", min=0, max=9999, value=9999)),
+               #          column(width=3, textInput("textFilter", "Remove Values", value="")),
+               #          column(width=3, numericInput("scaleValues", "Scale Values", value=1))
+               # )
                ),
      tabPanel("Correlation Explorer",
               selectInput(inputId = "numericVarCor1", "Select X variable", 

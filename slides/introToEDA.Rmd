@@ -270,7 +270,6 @@ You are given a dataset that consists of patients who have an elevated cardiovas
 
 Go as far as you can. Remember to use your post-its to show your status and whether you need help.
 
-
 ##Go For It!
 
 EDA is a puzzle with real-world consequences. Use your tools to understand the data!

@@ -55,7 +55,7 @@ In contrast to *Confirmatory Data Analysis (CDA)*, such as hypothesis testing, t
 
 EDA is vital when repurposing and reusing data that was collected for another purpose. Don't go in blind!
 
-##Analysis Plan
+## Analysis Plan
 
 - All EDA is done in the context of an Analysis Plan
 - Data is collected
@@ -123,7 +123,7 @@ View(iris)
 summary(iris)
 ```
 
-## R EDA: table()
+## R EDA: `table()`
 
 If your data contains many categorial variables, you need to check for possible confounding between them.
 
@@ -239,19 +239,19 @@ nrow(iris2)
 head(iris2)
 ```
 
-##What is Shiny?
+## What is Shiny?
 
 Shiny is a web presentation framework that allows you to take R code and make it into an interactive visualization. 
 
 We'll use it for the workshop today to do our EDA.
 
-##Running a Shiny App
+## Running a Shiny App
 
 You can use `runApp()` if your working directory is the same as the app, but I usually just use the `runApp` button in the corner of the Rstudio window when I am editing `global.R`, `ui.R`, or `server.R`.
 
 ![Running the shiny app](image/runningShinyApps.png)
 
-##Using the EDA Shiny App
+## Using the EDA Shiny App
 
 For the workshop, you'll use the Shiny App to do some EDA. You will need to be familiar with the basic architecture of the app.
 
@@ -261,7 +261,7 @@ For the workshop, you'll use the Shiny App to do some EDA. You will need to be f
 
 ![Shiny Architecture](image/shinyArchitecture.png)
 
-##The Problem
+## The Problem
 
 You are given a dataset that consists of patients who have an elevated cardiovascular risk. 
 
@@ -270,24 +270,24 @@ You are given a dataset that consists of patients who have an elevated cardiovas
 
 Go as far as you can. Remember to use your post-its to show your status and whether you need help.
 
-##Go For It!
+## Go For It!
 
 EDA is a puzzle with real-world consequences. Use your tools to understand the data!
 
 Get the workshop materials here:
 
 ```{r eval=FALSE}
-git clone http://github.com/laderast/shinyEDA
+git clone http://github.com/laderast/cvdWorkshop
 ```
 
-in the `shinyEDA/` folder, open up the `.Rproj` file
+in the `cvdWorkshop/` folder, open up the `.Rproj` file
 
 Datasets are in the `data/` folder along with the data dictionaries and readmes. 
 
 Read `weightLossAssignment.pdf` for more details.
 
 
-##Review Results of EDA Here
+## Review Results of EDA Here
 
 Results? Conclusions about the data?
 
@@ -297,7 +297,7 @@ For each issue with the data:
 - What did you decide to do about it?
 - What was the impact of your action?
 
-##Resources
+## Resources
 
 Be curious about the data. Don't be afraid!
 

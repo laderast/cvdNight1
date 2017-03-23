@@ -86,7 +86,8 @@ shinyServer(function(input, output) {
     if(is.null(trainMembership())){ return(NULL)}
     
     membership <- factor(trainMembership())
-    outData <- trainData() %>% mutate(membership = membership)
+    outData <- trainData() %>% 
+      mutate(membership = membership) 
     
     ggplot(outData, aes_string(x="membership", y=input$compareVar, fill="membership")) + geom_violin()
     
@@ -100,7 +101,7 @@ shinyServer(function(input, output) {
     
     groupNum <- input$groupNumber
     groupData <- trainData() %>% mutate(membership = membership) %>% 
-      dplyr::filter(membership == groupNum)
+      dplyr::filter(membership == groupNum) %>% select(-membership)
         
     print(summary(groupData))
     
@@ -118,10 +119,10 @@ shinyServer(function(input, output) {
     predictions <- predict(treeObj(), newdata=testData())
     outTab <- table(predictions, testData()[[outcomeVar]])
     
-    accuracy <- sum(diag(outTab))/sum(outTab)
+    accuracy <- sum(diag(outTab))/sum(outTab) * 100
+    accuracy <- signif(accuracy, digits = 4)
     
-    print(paste0("Accuracy of Model:", accuracy))
-    print(paste0("Confusion Matrix"))
+    print(paste0("Accuracy of Model: ", accuracy, "%"))
     print(outTab)
     
   })

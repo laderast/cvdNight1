@@ -1,4 +1,4 @@
-## Workshop on Assessing Cardiovascular Risk
+## Workshop on Assessing Cardiovascular Risk in a Synthetic Patient Cohort
 
 This repo consists of a workshop to teach students about using clinical and genetic covariates to predict cardiovascular risk in a realistic (but synthetic) dataset.
 

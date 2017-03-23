@@ -26,7 +26,7 @@ shinyUI(navbarPage(
              ),
     tabPanel("Compare Nodes",
               selectInput("compareVar", "Select Covariate to Compare", 
-                          choices=covariateNames),
+                          choices=numericVars),
               plotOutput("compareViolin")
              ),
     

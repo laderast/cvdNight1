@@ -18,25 +18,71 @@ shinyServer(function(input, output) {
   
   
   treeObj <- reactive({ 
-    #outcomeVariable: outcome of interest
-    #checkboxGroup: which variables to include
-    #pruneTree: pruning functions
-    
     #might want to use party (ctree()) instead - don't have to prune
     
-    trainTree <- tree(Species ~ ., data=dataset)
+    if(is.null(input$covariates)){
+      return(NULL)
+      #covariateString <- covariateNames[1]
+    }else{
+      covariateString <- paste(input$covariates, collapse = " + ")
+    }
+    formulaString <- paste(outcomeVar, "~", covariateString)
+    
+    #print(formulaString)
+    #trainTree <- tree(Species ~ ., data=dataset)
+    
+    trainTree <- ctree(as.formula(formulaString), data=dataset)
     
     return(trainTree)
     })
   
-  output$treePlot <- renderPlot({
+  output$cartTree <- renderPlot({
     ##levels of interactivity
     #examineGroups: output summary for group
+    if(is.null(treeObj())){return(NULL)}
+    
+    plot(treeObj())
     
   })
 
-  output$groupTable <- renderTable({
+  output$confusionMatrix <- renderTable({
+    if(is.null(treeObj())){return(NULL)}
     
+    out <- data.frame(predict=predict(treeObj()), truth=dataOut()[[outcomeVar]])
+    #print(head(out))
+    tab <- table(out)
+    tab
+  })
+  
+  output$groupUI <- renderUI({
+    membership <- where(treeObj())
+    choices <- unique(membership)
+    
+    out <- list()
+    out <- list(out, selectInput("groupNumber", "Select Terminal Node to Summarize", 
+                                 choices=membership, selected=membership[1]))
+    
+    return(tagList(out))
+        
+  })
+  
+  output$groupSummary <- renderPrint({
+    membership <- where(treeObj())
+    
+    if(is.null(input$groupNumber)){return(NULL)}
+    if(is.null(treeObj())){return(NULL)}
+    
+    groupNum <- input$groupNumber
+    groupData <- dataOut() %>% mutate(membership = membership) %>% 
+      dplyr::filter(membership == groupNum)
+        
+    print(summary(groupData))
+    
+  })
+  
+  output$groupTable <- renderTable({
+    membership <- where(treeObj())
+    table(membership, dataOut()[[outcomeVar]])
   })
   
 })

@@ -1,6 +1,7 @@
 library(shiny)
 library(ggplot2)
 library(dplyr)
+library(party)
 
 ###Put Data processing steps here
 #load dataset A
@@ -14,14 +15,15 @@ library(dplyr)
 dataset <- iris
 dataset <- dataset %>% mutate(sepalRatio=Sepal.Length/Sepal.Width, petalRatio = Petal.Length/Petal.Width)
 
-#Code to process dataset B
+trainIndex <- sample(nrow(dataset), size = floor(0.75 * nrow(dataset)))
+trainDataset <- dataset[trainIndex,]
+testDataset <- dataset[-trainIndex,]
 
-datasetB <- read.csv("data/datasetB.csv", row.names = 1)
-datasetB <- datasetB %>% filter(staffID1 != "S3")
-datasetB <- na.omit(datasetB)
-datasetB <- datasetB %>% mutate(weightLoss = (startWeight - endWeight) * 2.2, 
-                                weightLossPerDay = weightLoss / timeElapsed)
-#dataset <- datasetB
+outcomeVar <- "Species"
+
+covariateNames <- colnames(dataset)[!colnames(dataset) %in% outcomeVar]
+
+#Code to process dataset B
 
 #Code to combine the two datasets
 #Here we select columns for each dataset (treatment and weight)

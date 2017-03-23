@@ -87,7 +87,13 @@ shinyServer(function(input, output) {
   output$testResponse <- renderPrint({
     
     predictions <- predict(treeObj(), newdata=testData())
-    table(predictions, testData()[[outcomeVar]])
+    outTab <- table(predictions, testData()[[outcomeVar]])
+    
+    accuracy <- sum(diag(outTab))/sum(outTab)
+    
+    print(paste0("Accuracy of Model:", accuracy, "\n"))
+    print(paste0("Confusion Matrix \n"))
+    print(outTab)
     
     #pull calls as max
   })

@@ -43,7 +43,6 @@ covariateNames <- colnames(dataset)[!colnames(dataset) %in% outcomeVar]
 
 
 ##Don't modify anything below here, or app won't work properly.
-
 #get the variable types
 varClass <- sapply(dataset, class)
 

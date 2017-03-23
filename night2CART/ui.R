@@ -14,14 +14,19 @@ shinyUI(navbarPage(
 
   # Sidebar with a slider input for number of bins
     tabPanel("Tree Explorer",
-             selectInput("covariates", "Select Covariates for Model", 
+              selectInput("covariates", "Select Covariates for Model", 
                                 choices = covariateNames, multiple=TRUE),
-             plotOutput("cartTree"),
-            tableOutput("confusionMatrix")),
-    tabPanel("Subgroup Explorer",
+              fluidRow(
+                column(width=9,plotOutput("cartTree")),
+                column(width=3, tableOutput("confusionMatrix"))
+              ),
               uiOutput("groupUI"),
               verbatimTextOutput("groupSummary")
+             ),
+    tabPanel("Test Group Accuracy",
+             verbatimTextOutput("testResponse")
              )
+    
   
     #add group comparison?
     #add evaluate on test data?

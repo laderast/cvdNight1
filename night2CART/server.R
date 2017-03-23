@@ -1,21 +1,17 @@
-
-# This is the server logic for a Shiny web application.
-# You can find out more about building applications with Shiny here:
-#
-# http://shiny.rstudio.com
-#
-
 library(shiny)
 
 shinyServer(function(input, output) {
 
-  #dataOut is a "reactive" dataset - you can add live filtering criteria here
-  #to use this reactive, notice you have to use dataOut() rather than just dataOut
+  #trainData is a "reactive" dataset - you can add live filtering criteria here
+  #to use this reactive, notice you have to use trainData() rather than just trainData
   #in this expression
-  dataOut <- reactive({
-    dataset
+  trainData <- reactive({
+    trainDataset
   })
   
+  testData <- reactive({
+    testDataset
+  })
   
   treeObj <- reactive({ 
     #might want to use party (ctree()) instead - don't have to prune
@@ -31,7 +27,7 @@ shinyServer(function(input, output) {
     #print(formulaString)
     #trainTree <- tree(Species ~ ., data=dataset)
     
-    trainTree <- ctree(as.formula(formulaString), data=dataset)
+    trainTree <- ctree(as.formula(formulaString), data=trainData())
     
     return(trainTree)
     })
@@ -48,14 +44,17 @@ shinyServer(function(input, output) {
   output$confusionMatrix <- renderTable({
     if(is.null(treeObj())){return(NULL)}
     
-    out <- data.frame(predict=predict(treeObj()), truth=dataOut()[[outcomeVar]])
+    out <- data.frame(predict=predict(treeObj()), truth=trainData()[[outcomeVar]])
     #print(head(out))
     tab <- table(out)
     tab
   })
   
   output$groupUI <- renderUI({
+    if(is.null(treeObj())){return(NULL)}
+    
     membership <- where(treeObj())
+    membership <- sort(membership)
     choices <- unique(membership)
     
     out <- list()
@@ -67,13 +66,13 @@ shinyServer(function(input, output) {
   })
   
   output$groupSummary <- renderPrint({
-    membership <- where(treeObj())
-    
     if(is.null(input$groupNumber)){return(NULL)}
     if(is.null(treeObj())){return(NULL)}
     
+    membership <- where(treeObj())
+    
     groupNum <- input$groupNumber
-    groupData <- dataOut() %>% mutate(membership = membership) %>% 
+    groupData <- trainData() %>% mutate(membership = membership) %>% 
       dplyr::filter(membership == groupNum)
         
     print(summary(groupData))
@@ -82,7 +81,15 @@ shinyServer(function(input, output) {
   
   output$groupTable <- renderTable({
     membership <- where(treeObj())
-    table(membership, dataOut()[[outcomeVar]])
+    table(membership, trainData()[[outcomeVar]])
+  })
+  
+  output$testResponse <- renderPrint({
+    
+    predictions <- predict(treeObj(), newdata=testData())
+    table(predictions, testData()[[outcomeVar]])
+    
+    #pull calls as max
   })
   
 })

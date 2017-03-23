@@ -11,7 +11,6 @@ datasetA <- na.omit(datasetA)
 dataset <- datasetA
 
 ##Don't modify anything below here, or app won't work properly.
-
 #get the variable types
 varClass <- sapply(dataset, class)
 

@@ -17,12 +17,19 @@ shinyUI(navbarPage(
               selectInput("covariates", "Select Covariates for Model", 
                                 choices = covariateNames, multiple=TRUE),
               fluidRow(
-                column(width=9,plotOutput("cartTree")),
+                column(width=9,plotOutput("cartTree", click="mouse_click")),
                 column(width=3, tableOutput("confusionMatrix"))
               ),
               uiOutput("groupUI"),
-              verbatimTextOutput("groupSummary")
+              verbatimTextOutput("groupSummary")#,
+              #verbatimTextOutput("cartNode")
              ),
+    tabPanel("Compare Nodes",
+              selectInput("compareVar", "Select Covariate to Compare", 
+                          choices=covariateNames),
+              plotOutput("compareViolin")
+             ),
+    
     tabPanel("Test Group Accuracy",
              verbatimTextOutput("testResponse")
              )

@@ -40,7 +40,18 @@ shinyServer(function(input, output) {
     plot(treeObj())
     
   })
+  
+  trainMembership <- reactive({
+    if(is.null(treeObj())){return(NULL)}
+    return(where(treeObj()))
+  })
 
+  testMembership <- reactive({
+    if(is.null(treeObj())){return(NULL)}
+    return(where(treeObj(), newdata=testData()))
+  })
+  
+  
   output$confusionMatrix <- renderTable({
     if(is.null(treeObj())){return(NULL)}
     
@@ -50,10 +61,15 @@ shinyServer(function(input, output) {
     tab
   })
   
+  output$cartNode <- renderText({
+    if(is.null(input$mouse_click)){return(NULL)}
+    print(input$mouse_click)
+  })
+  
   output$groupUI <- renderUI({
     if(is.null(treeObj())){return(NULL)}
     
-    membership <- where(treeObj())
+    membership <- trainMembership()
     membership <- sort(membership)
     choices <- unique(membership)
     
@@ -65,11 +81,22 @@ shinyServer(function(input, output) {
         
   })
   
+  output$compareViolin <- renderPlot({
+    
+    if(is.null(trainMembership())){ return(NULL)}
+    
+    membership <- factor(trainMembership())
+    outData <- trainData() %>% mutate(membership = membership)
+    
+    ggplot(outData, aes_string(x="membership", y=input$compareVar, fill="membership")) + geom_violin()
+    
+  })
+  
   output$groupSummary <- renderPrint({
     if(is.null(input$groupNumber)){return(NULL)}
     if(is.null(treeObj())){return(NULL)}
     
-    membership <- where(treeObj())
+    membership <- trainMembership()
     
     groupNum <- input$groupNumber
     groupData <- trainData() %>% mutate(membership = membership) %>% 
@@ -80,22 +107,23 @@ shinyServer(function(input, output) {
   })
   
   output$groupTable <- renderTable({
-    membership <- where(treeObj())
+    membership <- trainMembership()
     table(membership, trainData()[[outcomeVar]])
   })
   
   output$testResponse <- renderPrint({
+    
+    if(is.null(treeObj())){return(NULL)}
     
     predictions <- predict(treeObj(), newdata=testData())
     outTab <- table(predictions, testData()[[outcomeVar]])
     
     accuracy <- sum(diag(outTab))/sum(outTab)
     
-    print(paste0("Accuracy of Model:", accuracy, "\n"))
-    print(paste0("Confusion Matrix \n"))
+    print(paste0("Accuracy of Model:", accuracy))
+    print(paste0("Confusion Matrix"))
     print(outTab)
     
-    #pull calls as max
   })
   
 })

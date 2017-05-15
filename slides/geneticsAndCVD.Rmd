@@ -2,7 +2,7 @@
 title: "Genetics and Cardiovascular Risk"
 author: "Ted Laderas"
 date: "5/15/2017"
-output: html_document
+output: slidy_presentation
 ---
 
 ## DNA Structure

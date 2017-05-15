@@ -24,11 +24,12 @@ dataset <- fread("../data/fullPatientData.csv", stringsAsFactors = FALSE)
 
 ## Overview
 
-- Mini Lecture (~ 15 min)
+- Mini Lecture
+    - Exploratory Data Analysis (EDA)
     - Using Shiny for EDA
-    - Cleaning your dataset
-- Workshop: Exploring the CVD dataset (30 min)
-- Discussion/Wrapup (~ 15 min)
+    - Filtering your dataset
+- Workshop: Exploring the CVD dataset
+- Discussion/Wrapup
     - What did you learn?
     
 ## The Dataset

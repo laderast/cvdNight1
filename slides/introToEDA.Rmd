@@ -11,22 +11,33 @@ You will need R and Rstudio to run this workshop.
 You will need the following packages to do this workshop. Please install these packages using the `install.packages()` command.
 
 ```{r message=FALSE}
-#To install these packages: use install.packages("tidyverse", "shiny", "ggplot2")
+#To install these packages: use the command
+#install.packages("tidyverse", "shiny", "ggplot2")
 
 library(dplyr)
 library(shiny)
 library(ggplot2)
+library(data.table)
+
+dataset <- fread("../data/fullPatientData.csv", stringsAsFactors = FALSE)
 ```
 
-## Overview For Today
+## Overview
 
-- Mini Lecture (~ 30 min)
-    - What is EDA?
-    - Basics of dplyr
+- Mini Lecture (~ 15 min)
     - Using Shiny for EDA
-- Workshop: Exploring the CVD dataset
-- Discussion/Wrapup (~ 30 min)
+    - Cleaning your dataset
+- Workshop: Exploring the CVD dataset (30 min)
+- Discussion/Wrapup (~ 15 min)
     - What did you learn?
+    
+## The Dataset
+
+You are given a dataset that consists of patients who have been assessed for cardiovascular disease (CVD). 
+
+Your goal for today is to explore the dataset and identify a subgroup that is at risk for CVD.
+
+Tomorrow, we'll attempt to use machine learning to build a model to predict risk in another set of patients.
 
 ## What is Exploratory Data Analysis (EDA)?
 
@@ -34,14 +45,6 @@ library(ggplot2)
 - Detective work on your data
 - An attitude towards data, not just techniques
 - 'Find patterns, reveal structure, and make tenative model assessments (Behrens)'
-
-## Remember
-
-"Statistical ability, divorced from a scientific intimacy with the fundamental observations, leads nowhere"
-- E.G. Boring, *Mathematical vs. scientific significance*
-
-"Exploratory data analysis can never be the whole story, but nothing else can serve as the foundation stone."
-- John Tukey, *Exploratory Data Analysis*
 
 ## EDA is not cheating!
 
@@ -63,42 +66,17 @@ EDA is vital when repurposing and reusing data that was collected for another pu
 - Be prepared to change analysis plan based on your results
     - Raise red flags on problematic data
 
-## Role of EDA in workflow
-
-EDA is often an iterative process. Updating your analysis plan may be necessary.
-
-Oftentimes, new problems pop up after you solve one. Expect to go through multiple steps.
-
-Similarly, tackle one issue at a time. Don't rush!
-
-![https://upload.wikimedia.org/wikipedia/commons/b/ba/Data_visualization_process_v1.png](https://upload.wikimedia.org/wikipedia/commons/b/ba/Data_visualization_process_v1.png)
-
 ## EDA: Always read the data dictionary!
 
 Always read the data dictionary if provided! There is often some useful information in there about how the data is represented (such as the units for each column, etc).
 
 ![Data Dictionary Example](image/dataDictionary.png)
-
-## R Tools for EDA
-
-- `head()` - Always make sure data is loaded correctly!
-- `summary()` - Look for 'strange' values
-- `table()` - Look for confounding among categorical variables
-- `hist()` - Highlight outliers
-- `boxplot()` - Compare conditional medians and distributions
-- `plot.xy()` - Look for correlations among continuous variables
-
-Not covered here, but also useful (covered in discussion):
-
-- `pca()` - dimensionality reduction to understand variabilty in data
-- `heatmap()` - cluster data to look for groupings in data
-
 ## R EDA Tools: `head()`
 
 Sometimes, data is given in a format that has some quirks - always make sure the data is loaded correctly!
 
-- Does file have header or not?
-- Does file have quotes?
+- Does the file have a header or not?
+- Does the file have quotes?
 
 ```{r}
 data(iris)
@@ -111,74 +89,62 @@ For Rstudio users, `View()` is an extremely useful way to explore smaller datase
 View(iris)
 ```
 
-## R EDA Tools: `summary()`
+## What is Shiny?
 
-`summary()` gives a high-level view of data
+Shiny is a framework that allows you to take R code and make it into an interactive visualization. 
 
-- Continuous Data: Range of data
-- Categorical Data: What categories exist in data, how are they distributed?
-- Missing values: are covariates missing data?
+We'll use it for the workshop today to do our EDA.
 
-```{r}
-summary(iris)
-```
+## Using the EDA Shiny App
 
-## R EDA: `table()`
+For the workshop, you'll use the Shiny App to do some EDA. You will need to be familiar with the basic architecture of the app.
 
-If your data contains many categorial variables, you need to check for possible confounding between them.
+- `global.R` - This is where you'll do the majority of the work - place filtering and processing steps here. Any objects loaded here can be seen by both the `ui.R` and `server.R`.
 
-Examples:
+![Shiny Architecture](image/shinyArchitecture.png)
 
-- Data collected by multiple clinics, each assigned to treatment/control
-- Samples processed by different labs
+## Running a Shiny App
 
-```{r}
-data <- read.delim("data/confounding.txt")
+You can use `runApp()` if your working directory is the same as the app, but I usually just use the `runApp` button in the corner of the Rstudio window when I am editing `global.R`.
 
-table(data)
-```
+![Running the shiny app](image/runningShinyApps.png)
 
-## R EDA: Histograms and Boxplots
+## What can the explorer do?:
 
-Boxplots and histograms can highlight outliers and potential nonsensical values, especially if they are conditioned on categorical variables. 
+Ideally, even with EDA, we have some ideas of aspects of the data to explore before we get started. I'll show how:
 
-They can also highlight how normally distributed the data is (important to see if data is satisfying assumptions).
+1.  Summary Tables (What categories exist in the data?)
+2.  Cross-tables (How does age influence CVD risk?)
+3.  Histograms (How is age distibuted in our population?)
+4.  Boxplots (How is CVD)
 
-```{r message=FALSE}
-data(iris)
-library(ggplot2)
+## Questions for you to answer
 
-#normal histogram
-ggplot(iris, aes(x=Sepal.Length)) + geom_histogram()
+Using the Shiny App:
 
-#use facet_wrap() to condition the plot
-ggplot(iris, aes(x=Sepal.Length)) + geom_histogram() + facet_wrap(c("Species"))
+ + How many people have CVD?
+ + What are the biggest contributors to 10 year CVD risk?
+ + Which groups have elevated CVD risk?
+  + define by age, gender, race
+ + How does genetics influence CVD risk?
+ 
+## Your Goal for Today
 
-#show boxplot, using Species as an x variable
-ggplot(iris, aes(x=Species,y=Sepal.Length)) + geom_boxplot()
-```
+Given the larger dataset, identify a group you believe is at elevated risk for CVD.
 
-## R EDA: X-Y plots
+Use no more than two filtering criteria (Race + Age, Gender + Smoking, etc) to define your group. 
 
-Highlight correlation between continuous variables. Can be really important when you are building linear models and selecting variables.
+Why is your group interesting to you? How big is your group?
 
-```{r}
-#xy plot between Sepal.Width and Sepal.Length
-ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) + geom_point()
-
-#show a pairs() plot
-pairs(iris[,1:4])
-```
+We'll see how well we can predict CVD risk for your group tomorrow.
 
 ## Filtering Dataset: dplyr package
 
-While conducting your EDA, you may want to filter out data and recalculate values and assesss the impact of these statements. I will show some basics to use the `dplyr` package to do this. It's a package made for manipulating data.frames, which comes in handy.
+We'll use the `dplyr` package to filter and identify our subgroup of interest.
 
-dplyr has lots of commands, but I will just show three commands:
+`dplyr` has lots of commands, but I will just show one command today: 
 
 - `filter()` - remove rows according to criteria
-- `select()` - select columns by name
-- `mutate()` - calculate new column variables by manipulating data
 
 ## dplyr::filter()
 
@@ -186,89 +152,15 @@ dplyr has lots of commands, but I will just show three commands:
 
 ```{r message=FALSE}
 library(dplyr)
-newIris <- iris %>% filter(Species == "setosa" & Sepal.Length > 5)
 
-head(newIris)
+newData <- dataset %>% filter(gender=="M")
+
+knitr::kable(head(newData))
 ```
 
-Note that any statement or function that produces a boolean vector (such as `is.na(Species)`) can be used here.
+We'll use the `filter()` verb to subset the data so we can examine questions about these subsets.
 
-## dplyr::select()
-
-`select()` lets you select columns in your dataset.
-
-```{r}
-library(dplyr)
-newIris <- iris %>% select(Sepal.Width, Species)
-
-head(newIris)
-```
-
-## dplyr::mutate()
-
-`mutate()` is one of the most useful dplyr commands. You can use it to transform data and add it as a new column into the data.frame
-
-```{r}
-library(dplyr)
-newIris <- iris %>% mutate(sepalSum = Sepal.Length + Sepal.Width)
-
-head(newIris)
-
-#add a column with the same value for each entry
-newIris <- newIris %>% mutate(value = "Site1")
-
-head(newIris)
-```
-
-## Chaining dplyr commands using `%>%`
-
-The power of dplyr comes from the fact that you can chain multiple steps.
-
-Example: Let's calculate a new column `SepalMean` on `iris` and filter the dataset on this new variable.
-
-```{r}
-library(dplyr)
-data(iris)
-
-iris2 <- iris %>% mutate(SepalMean = (Sepal.Length + Sepal.Width) / 2) %>%
-  filter(SepalMean > 4)
-
-nrow(iris)
-nrow(iris2)
-
-head(iris2)
-```
-
-## What is Shiny?
-
-Shiny is a web presentation framework that allows you to take R code and make it into an interactive visualization. 
-
-We'll use it for the workshop today to do our EDA.
-
-## Running a Shiny App
-
-You can use `runApp()` if your working directory is the same as the app, but I usually just use the `runApp` button in the corner of the Rstudio window when I am editing `global.R`, `ui.R`, or `server.R`.
-
-![Running the shiny app](image/runningShinyApps.png)
-
-## Using the EDA Shiny App
-
-For the workshop, you'll use the Shiny App to do some EDA. You will need to be familiar with the basic architecture of the app.
-
-- `global.R` - This is where you'll do the majority of the work - place filtering and processing steps here. Any objects loaded here can be seen by both the `ui.R` and `server.R`.
-- `ui.R` - This is where the user interface and display elements are. Communicates with `server.R` with `input` object (values from ui Elements). Gets output elements with the `output` object provided by `server.R`.
-- `server.R` - All of the actual processing and plotting goes here. Gets UI values from `input` object and places the elements to be plotted in the `output` object so `ui.R` can access it.
-
-![Shiny Architecture](image/shinyArchitecture.png)
-
-## The Problem
-
-You are given a dataset that consists of patients who have an elevated cardiovascular risk. 
-
-1) Your goal is to conduct EDA on the patient data to assess what variables are predictive of cardiovascular disease in the patient population. If you notice any issues in the data, will you need to filter or transform the data?
-2) Advanced Students: Look at both the clinical and genetic covariates using EDA? What variables do you believer are predictive of CVD?
-
-Go as far as you can. Remember to use your post-its to show your status and whether you need help.
+For advanced students: Note that any statement or function that produces a boolean vector (such as `is.na(Species)`) can be used here.
 
 ## Go For It!
 
@@ -282,10 +174,11 @@ git clone http://github.com/laderast/cvdWorkshop
 
 in the `cvdWorkshop/` folder, open up the `.Rproj` file
 
-Datasets are in the `data/` folder along with the data dictionaries and readmes. 
+Datasets are in the `data/` folder along with the data dictionaries and readmes. The Shiny app should automatically load the data when you run it.
 
-Read `weightLossAssignment.pdf` for more details.
+To make modifications to the data, you'll need to modify the global.R file.
 
+Read `cvdWorkshopNight1.pdf` for more details.
 
 ## Review Results of EDA Here
 
@@ -297,11 +190,4 @@ For each issue with the data:
 - What did you decide to do about it?
 - What was the impact of your action?
 
-## Resources
 
-Be curious about the data. Don't be afraid!
-
-- [Exploratory Data Analysis by Tukey](http://www.amazon.com/Exploratory-Data-Analysis-John-Tukey/dp/0201076160) - The original classic treatise.
-- [Shiny at RStudio](http://shiny.rstudio.com) - More information on Shiny
-- http://github.com/laderast/shinyTutorial - My shiny tutorial.
-- https://github.com/justmarkham/dplyr-tutorial - a great dplyr tutorial (comes with videos, too!)

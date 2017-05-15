@@ -10,7 +10,7 @@ You will need R and Rstudio to run this workshop.
 
 You will need the following packages to do this workshop. Please install these packages using the `install.packages()` command.
 
-```{r message=FALSE}
+```{r message=FALSE, warning=FALSE}
 #To install these packages: use the command
 #install.packages("tidyverse", "shiny", "ggplot2")
 

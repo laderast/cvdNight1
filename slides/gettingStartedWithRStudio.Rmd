@@ -1,0 +1,58 @@
+---
+title: "Getting Started with the Shiny EDA Explorer"
+author: "Ted Laderas"
+date: "5/15/2017"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## What you need before you get started
+
+If you are on your own laptop, make sure that the following packages are installed.
+
+```{r eval=FALSE}
+library(shiny)
+library(tidyverse)
+library(data.table)
+```
+
+You can install them with the following statement:
+
+```{r eval=FALSE}
+install.packages("shiny", "tidyverse", "data.table")
+```
+
+## Signing into the RStudio Instance 
+
+We've created an account for you on our RStudio instance. To get there, open your browser to:
+
+http://church.ohsu.edu:8787/
+
+And log in with your info.
+
+## Grab the GitHub Repo
+
+Go to http://github.com/laderast/cvdNight1/ and download the repo as a zip file (it's the green button).
+
+Now we'll upload the zip file to the server. On the *Files* tab in the lower right of your RStudio window, click "Upload", and upload the zip file to the server.
+
+## Now open the project
+
+In your folder that was created on the server, there is a file called `cvdWorkshop.Rproj`. Click on it to initialize the project.
+
+## Start Running the App
+
+You're almost there! Open the `global.R` file. If you are on your laptop, you can use the 
+`runApp` button. 
+
+If you're on our RStudio instance, the runApp button is broken. Instead, you will need to input the following commands.
+
+```{r eval=FALSE}
+library(shiny)
+runApp()
+```

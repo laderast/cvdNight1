@@ -13,7 +13,11 @@ output: slidy_presentation
 
 A SNP (Single Nucelotide Polymorphism) is a single base-pair location in the genome where we observe variation across people.
 
+We need two pieces of information to locate a snp: the chromosome it's on, and the linear position on the chromosome.
+
 ![Snp Image by David Hall / CC Licsenced](image/snpDavidHall.png)
+
+## Parents and genetics
 
 Because we have two chromosomes (one from each parent), we will have two copies (values) at any SNP.
 
@@ -31,7 +35,21 @@ For example: "AA" is observed at SNP location 50% of the time, the genotype "GA"
 
 ## SNPs are associated with disease
 
+A number of SNPs have been associated with CVD. Having a variant can increase your overall risk of having CVD.
 
+A number of these SNPs are associated with genes involving lipid synthesis. 
+
+## SNPs of Interest in our data
+
+[SNPedia](http://snpedia.com/index.php/Heart_disease) lists a number of potentially interesting SNPs:
+
+[Rs4665058](http://snpedia.com/index.php/Rs4665058), 4x risk if have two copies of the SNP (A;A) and (C;C) - wild type. Chr 2, 159333698
+
+[Rs283206](http://snpedia.com/index.php/Rs2383206), Smaller risk, (Chr 9, 22115027). 1.7 x risk (G;G) and (A;A) wild type. Co-morbidity: diabetes
+
+[Rs10757278](http://snpedia.com/index.php/Rs10757278) (Chr 9, 22124478). (A;A) 0.78 x risk of heart disease, (A;G) 1.3 x risk, (G;G) 1.6x risk for heart disease. Co-morbidity: diabetes
+
+[Rs1333049](http://snpedia.com/index.php/Rs1333049) (Chr 9, 22125504). (G;G) Normal (WT); (C;G) 1.5 increased risk; (C;C) 1.9x increased risk.
 
 ## Questions about the genomic data
 

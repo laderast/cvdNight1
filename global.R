@@ -4,12 +4,14 @@ library(dplyr)
 library(data.table)
 
 ###Put Data processing steps here
-#load dataset
-#dataset <- fread("data/fullPatientData.csv",stringsAsFactors = TRUE)
+#load dataset, loading strings as categorical data
+dataset <- fread("data/fullPatientData.csv",stringsAsFactors = TRUE)
 
 #Uncomment this line to load the genetic data
-dataset <- fread("data/genoData.csv",stringsAsFactors = TRUE)
+#dataset <- fread("data/genoData.csv",stringsAsFactors = TRUE)
+#make this variable a character
 dataset$patientID <- as.character(dataset$patientID)
+#make this variable an ordered categorical variable
 dataset$age <- ordered(dataset$age)
 
 

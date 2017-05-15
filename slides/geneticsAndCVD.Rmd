@@ -5,6 +5,10 @@ date: "5/15/2017"
 output: html_document
 ---
 
+## DNA Structure
+
+![https://cnx.org/contents/8v2Xzdco@3/The-Structure-of-DNA](image/dnaStructure.jpg)
+
 ## What is a SNP?
 
 A SNP (Single Nucelotide Polymorphism) is a single base-pair location in the genome where we observe variation across people.

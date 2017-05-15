@@ -6,6 +6,8 @@ library(data.table)
 ###Put Data processing steps here
 #load dataset
 #dataset <- fread("data/fullPatientData.csv",stringsAsFactors = TRUE)
+
+#Uncomment this line to load the genetic data
 dataset <- fread("data/genoData.csv",stringsAsFactors = TRUE)
 dataset$patientID <- as.character(dataset$patientID)
 dataset$age <- ordered(dataset$age)

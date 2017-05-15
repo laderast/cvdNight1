@@ -34,11 +34,11 @@ dataset <- fread("../data/fullPatientData.csv", stringsAsFactors = FALSE)
     
 ## The Dataset
 
-You are given a dataset that consists of patients who have been assessed for cardiovascular disease (CVD). 
+You are given a dataset that consists of patients from Health Hospital University who have been assessed for cardiovascular disease (CVD). This dataset was modeled after real patient data, but is completely synthetic.
 
 Your goal for today is to explore the dataset and identify a subgroup that is at risk for CVD.
 
-Tomorrow, we'll attempt to use machine learning to build a model to predict risk in another set of patients.
+Tomorrow, we'll attempt to use machine learning to build a model to predict risk for these patients.
 
 ## What is Exploratory Data Analysis (EDA)?
 

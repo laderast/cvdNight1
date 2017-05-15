@@ -27,6 +27,12 @@ shinyServer(function(input, output) {
     tab
   })
   
+  output$proportionTab <- renderPrint({
+    out <- dataOut()[,c(input$condTab, "cvd"), with=FALSE]
+    tab <- t(table(out))
+    return(tab[2,]/tab[1,])
+  })
+  
   output$distPlot <- renderPlot({
     
     outPlot <- ggplot(dataOut(), aes_string(x=input$numericVarHist)) + geom_histogram(bins=input$bins)

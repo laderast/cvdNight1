@@ -19,6 +19,11 @@ shinyUI(navbarPage(
              selectInput(inputId = "crossTab1", "Select Crosstab Variable (x)", choices=categoricalVars, selected=categoricalVars[1]),
              selectInput(inputId = "crossTab2", "Select Crosstab Variable (y)", choices=categoricalVars, selected=categoricalVars[1]),
              verbatimTextOutput("crossTab")),
+    tabPanel("Proportion Explorer",
+             selectInput(inputId = "condTab", "Select Variable to Calculate Proportions",
+                         choices=categoricalVars, selected=categoricalVars[1]),
+                        verbatimTextOutput("proportionTab")
+             ),
     tabPanel("Histogram Explorer",
               fluidRow(
                 column(width = 4,selectInput(inputId = "numericVarHist", "Select Numeric Variable", 

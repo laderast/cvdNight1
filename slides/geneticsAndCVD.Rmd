@@ -19,7 +19,7 @@ We need two pieces of information to locate a snp: the chromosome it's on, and t
 
 ## Parents and genetics
 
-Because we have two chromosomes (one from each parent), we will have two copies (values) at any SNP.
+Because we have two chromosomes (one from each parent), we will have two copies (values) at any SNP. Each of these copies is called an *allele*.
 
 For example, if my dad gave me a copy (allele) with an A, and my mom gave me a copy (allele) with a G, my genotype at that SNP location would be AG.
 
@@ -29,9 +29,9 @@ For this exercise, we've simplified the genotypes. Try and figure out how.
 
 We classify the different genotypes based on how frequently they are observed in the population. 
 
-Nomenclature: if a genotype is observed most of the time, we term that genotype the wild type. The other
+Nomenclature: if a genotype is observed most of the time, we term that genotype the wild type. The other genotype is called the variant, and by definition occurs less than the wild type.
 
-For example: "AA" is observed at SNP location 50% of the time, the genotype "GA" is observed 40
+![Snppedia Snapshot](image/snpFrequencies.png)
 
 ## SNPs are associated with disease
 

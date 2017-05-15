@@ -1,6 +1,6 @@
 ---
 title: "Introduction to EDA"
-date: "March 22, 2017"
+date: "May 15, 2017"
 output: slidy_presentation
 ---
 
@@ -24,21 +24,20 @@ dataset <- fread("../data/fullPatientData.csv", stringsAsFactors = FALSE)
 
 ## Overview
 
-- Mini Lecture
-    - Exploratory Data Analysis (EDA)
+- Mini Lecture (~ 15 min)
     - Using Shiny for EDA
-    - Filtering your dataset
-- Workshop: Exploring the CVD dataset
-- Discussion/Wrapup
+    - Cleaning your dataset
+- Workshop: Exploring the CVD dataset (30 min)
+- Discussion/Wrapup (~ 15 min)
     - What did you learn?
     
 ## The Dataset
 
-You are given a dataset that consists of patients from Health Hospital University who have been assessed for cardiovascular disease (CVD). This dataset was modeled after real patient data, but is completely synthetic.
+You are given a dataset that consists of patients who have been assessed for cardiovascular disease (CVD). 
 
 Your goal for today is to explore the dataset and identify a subgroup that is at risk for CVD.
 
-Tomorrow, we'll attempt to use machine learning to build a model to predict risk for these patients.
+Tomorrow, we'll attempt to use machine learning to build a model to predict risk in another set of patients.
 
 ## What is Exploratory Data Analysis (EDA)?
 

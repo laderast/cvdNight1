@@ -4,5 +4,8 @@ This repo consists of a workshop to teach students about using clinical and gene
 
 The workshop has two parts:
 
-  1. **Night 1 - Exploratory Data Analysis**
-  2. **Night 2 - Machine Learning using Decision Trees**
+  1. **Night 1 - Exploratory Data Analysis** (this repo)
+  2. [**Night 2 - Machine Learning using Decision Trees**](https://github.com/laderast/cvdNight2)
+  
+Workshop Materials are Licensed under a [Creative Commons 4.0 Non Commercial License](https://creativecommons.org/licenses/by-nc/4.0/)
+Associated Code is licensed under a [Non Profit Open Software License 3.0](https://opensource.org/licenses/NPOSL-3.0)

@@ -22,7 +22,8 @@ shinyUI(navbarPage(
     tabPanel("Proportion Explorer",
              selectInput(inputId = "condTab", "Select Variable to Calculate Proportions",
                          choices=categoricalVars, selected=categoricalVars[1]),
-                        verbatimTextOutput("proportionTab")
+                        verbatimTextOutput("proportionTab"),
+                        plotOutput("proportionBarplot")
              ),
     tabPanel("Histogram Explorer",
               fluidRow(

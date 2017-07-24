@@ -2,10 +2,15 @@ library(shiny)
 library(ggplot2)
 library(dplyr)
 library(data.table)
+library(tidyverse)
 
 ###Put Data processing steps here
 #load dataset, loading strings as categorical data
+#dataset <- fread("data/genoData.csv",stringsAsFactors = TRUE)
 dataset <- fread("data/fullPatientData.csv",stringsAsFactors = TRUE)
+
+#dataset <- dataset %>% filter(numAge > 50 & gender =="F") %>%
+#  select(cvd, htn) 
 
 #Uncomment this line to load the genetic data
 #dataset <- fread("data/genoData.csv",stringsAsFactors = TRUE)

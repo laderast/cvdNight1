@@ -27,10 +27,24 @@ shinyServer(function(input, output) {
     tab
   })
   
-  output$proportionTab <- renderPrint({
+  proportionTable <- reactive({
+    
     out <- dataOut()[,c(input$condTab, "cvd"), with=FALSE]
-    tab <- t(table(out))
-    return(tab[2,]/tab[1,])
+    #tab <- as.matrix(table(out))
+    out
+  })
+  
+  output$proportionTab <- renderPrint({
+    tab <- table(proportionTable())
+    return(tab[,"Y"]/(tab[,"N"] + tab[,"Y"]))
+    
+  })
+  
+  output$proportionBarplot <- renderPlot({
+     proportionTable() %>% 
+      ggplot(aes_string(x=input$condTab, fill="cvd")) + 
+      geom_bar(position="fill", color="black")
+    
   })
   
   output$distPlot <- renderPlot({

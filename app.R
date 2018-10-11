@@ -23,10 +23,15 @@ set.seed(111)
 #myDataFrame <- data.table(read_rds("data/common_data_small.rds"))
 myDataFrame <- fread("data/fullPatientData.csv")
 myDataFrame <- myDataFrame[sample(1:nrow(myDataFrame),size = 5000),]
+myDataFrame <- myDataFrame[,patientID := NULL]
+
+
+myDataFrame[,cvd:=factor(cvd)][,htn:=factor(htn)][,treat:=factor(treat)]
 
 remove_outcome <- sample(1:nrow(myDataFrame), 300)
 remove_bmi <- sample(1:nrow(myDataFrame), 250)
 remove_htn <- sample(1:nrow(myDataFrame), 400)
+
 
 myDataFrame[remove_outcome,]$cvd <- NA
 myDataFrame[remove_bmi,]$bmi <- NA
@@ -197,10 +202,12 @@ server <- function(input, output, session) {
   
   output$proportionBarplot <- renderPlot({
     
-    print(input$condTab)
+    print(proportionTable())
     
-    percent_table <- proportionTable() %>% data.frame() %>% group_by(!!sym(input$condTab)) %>%
+    percent_table <- proportionTable() %>% tidyr::drop_na() %>% data.frame() %>% group_by(!!sym(input$condTab)) %>%
       count(!!sym(outcomeVar)) %>% mutate(ratio=scales::percent(n/sum(n)))
+    
+    print(percent_table)
     
     proportionTable() %>% 
       ggplot(aes_string(x=input$condTab, fill=outcomeVar)) + 
